@@ -1,4 +1,4 @@
-PuMuKIT Stats UI
+PuMuKIT Paella Stats UI
 ================
 
 Bundle based on [Symfony](http://symfony.com/) to work with the [PuMuKIT2 Video Platform](https://github.com/campusdomar/PuMuKIT2/blob/2.1.x/README.md).
@@ -18,7 +18,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require teltek/pmk2-stats-ui-bundle dev_master
+$ composer require teltek/pmk2-paella-stats-ui-bundle dev_master
 ```
 
 
