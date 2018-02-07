@@ -66,6 +66,26 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 'particular': false,
             },
         },
+        'mua': {
+            'objects': {
+                'general': false,
+                'particular': false,
+            },
+            'series': {
+                'general': false,
+                'particular': false,
+            },
+        },
+		'mvc': {
+            'objects': {
+                'general': false,
+                'particular': false,
+            },
+            'series': {
+                'general': false,
+                'particular': false,
+            },
+        },
     };
 
     // Total views
@@ -78,6 +98,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
     pmk.total_items = {
         'mv' : 0,
+		'mua' : 0,
+		'mvc' : 0,
     };
 
     pmk.page = {
@@ -141,7 +163,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     pmk.most_viewed = {
         'options' : {
             chart : {
-                //noData: "Loading data...",
                 type : 'multiBarHorizontalChart',
                 showControls: false,
                 showLegend: false,
@@ -156,8 +177,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 y: function(d){return d.value;},
                 tooltip: {
                     gravity: 'e',
-                    //valueFormatter: function(d){return d;}, // Returns the field size if it is a parent
-                    //keyFormatter: function(d){return d;}, // Returns the field name of the node
                     contentGenerator: generateTooltip,
                 },
                 xAxis: {
@@ -178,7 +197,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     }
                 },
                 margin: {
-                    left: 120, //170,
+                    left: 120,
                     right: 50,
                 }
             },
@@ -198,7 +217,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 height: 400,
                 x: function(d){return d[0];},
                 y: function(d){return d[1];},
-                // ??
                 useInteractiveGuideline: true,
                 xAxis: {
                     showMaxMin: false,
@@ -228,11 +246,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             },
         },
         'data' : [],
-        //{
-        //    "key" : "North America" ,
-        //    "values" : [[ '1025409600000' , 23.041422681023] , [ '1028088000000' , 19.854291255832]]
-        //}
-        //    ],
         'config': {
             'extended' : true,
         },
@@ -260,7 +273,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     axisLabel: '',
                     tickFormat: function(d){
                         if (typeof(d)=='number'){
-                            //Fix typo #9590
                             var tab = pmk.view.tabes.series ? 'series':'objects';
                             var scope = pmk.view.scope == 'general'? 'general':'particular';
                             if (d < pmk.his[tab][scope].data[0].values[0][0]) {
@@ -275,7 +287,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 },
                 yAxis: {
                     axisLabel: 'Views',
-                    //axisLabelDistance: -10,
                     tickFormat: function(d){
                         return d;
                     }
@@ -302,6 +313,72 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
     };
 
+    pmk.most_used_agents = {
+        'options' : {
+            chart : {
+                type : 'multiBarHorizontalChart',
+                showControls: false,
+                showLegend: false,
+                height: 500,
+                x: function(d){ return d[1]+" ["+d[0]+"]";},
+                y: function(d){ return d[2];},
+                tooltip: {
+                    gravity: 'e',
+                },
+                xAxis: {
+                    showMaxMin: false,
+                    tickPadding: 20,
+                    tickFormat: function(d) { return d; }
+                },
+                yAxis: {
+                    axisLabel: 'Uses',
+                    tickFormat: function(d){ return d; }
+                },
+                margin: {
+                    left: 120,
+                    right: 50,
+                }
+            },
+        },
+        'data' : [],
+        'config': {
+            'extended': true,
+        },
+    };
+
+	pmk.cities_from = {
+        'options' : {
+            chart : {
+                type : 'multiBarHorizontalChart',
+                showControls: false,
+                showLegend: false,
+                height: 500,
+                x: function(d){ return d[0]+". "+d[1];},
+                y: function(d){ return d[2];},
+                tooltip: {
+                    gravity: 'e',
+                },
+                xAxis: {
+                    showMaxMin: false,
+                    tickPadding: 20,
+                    tickFormat: function(d) { return d; }
+                },
+                yAxis: {
+                    axisLabel: 'Views',
+                    tickFormat: function(d){ return d; }
+                },
+                margin: {
+                    left: 120,
+                    right: 50,
+                }
+            },
+        },
+        'data' : [],
+        'config': {
+            'extended': true,
+        },
+    };
+	
     activate();
 
     function activate(){
@@ -356,7 +433,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 'particular': angular.copy(pmk.series_timeline),
             },
         };
-
         pmk.his = {
             'series': {
                 'general': angular.copy(pmk.historical),
@@ -366,16 +442,37 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 'general': angular.copy(pmk.historical),
                 'particular': angular.copy(pmk.historical),
             },
-        }
-
+        };
+		pmk.mua = {
+            'series': {
+                'general': angular.copy(pmk.most_used_agents),
+                'particular': angular.copy(pmk.most_used_agents),
+            },
+            'objects': {
+                'general': angular.copy(pmk.most_used_agents),
+                'particular': angular.copy(pmk.most_used_agents),
+            },
+        };
+		pmk.mvc = {
+            'series': {
+                'general': angular.copy(pmk.cities_from),
+                'particular': angular.copy(pmk.cities_from),
+            },
+            'objects': {
+                'general': angular.copy(pmk.cities_from),
+                'particular': angular.copy(pmk.cities_from),
+            },
+        };
 
         setTimeout(function(){
             if (!(pmk.view.tabes.objects && pmk.view.scope != 'general')){
                 get_most_viewed();
-            }else if (pmk.view.scope != 'general'){
+            } else if (pmk.view.scope != 'general'){
                 load_particular_scope();
             }
+            get_agents_data();
             get_historical_data();
+			get_cities_data();
         },500);
 
     }
@@ -393,7 +490,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     function range(num){
         var range;
         // Allways show 5 items
-        //
         // If num [0-3] --> 1,1,2,3,...,total
         // If num [total-3,total] --> 1,...,total-3,total-2,total-1,total
         // If num [4,total-4] --> 1,...,num-1,num,num+1,...,total
@@ -511,7 +607,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             var type = obj_type == 'objects' ? 'mmobj':'series';
             $http({
                 method: 'GET',
-                url: '/api/media/' + type + '.json',
+                url: '/paella/' + type + '/most_viewed.json',
                 params:{
                     'criteria[id]' : $routeParams.id,
                 }
@@ -519,7 +615,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             .then( function (data){
                 var type = pmk.view.tabes.series ? 'series':'mmobj';
                 var generic_data_type = type.lastIndexOf('s') == type.length-1 ? type : (type + 's');
-                var obj = data.data[generic_data_type][data.data.criteria.id];
+                var obj = data.data[generic_data_type][0][type];               
+                
                 pmk.current = {
                     'id': obj.id,
                     'label': obj.title[obj.locale],
@@ -542,6 +639,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 //TODO: If type is series add number of objects of the serie.
             });
     }
+
     function get_most_viewed(origin){
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general' ? 'general':'particular';
@@ -572,22 +670,18 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 params['criteria[id]'] = pmk.view.scope;
             }
 
-
             $http({
                 method: 'GET',
-                url: '/api/media/'+ mv_data +'/most_viewed',
+                url: '/paella/' + mv_data + '/most_viewed.json',
                 params: params,
             })
             .then(getMVSuccess)
                 .catch(getMVError);
-
         }
     }
 
     function update_most_viewed(data){
 
-        //var new_data = pmk.most_viewed.data;
-        //new_data.values = data;
         var new_data = [{
             'key': '',
             'color': '#ED6D00',
@@ -611,16 +705,13 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             "      <td class='key'>" + d.data.label +
             "      </td>" +
             "      <td class='value'>" + d.data.value +
-            "      </td>"
+            "      </td>" +
             "    </tr>" +
             "  </tbody>"+
             "</table>";
-
     }
 
-
-
-    function getMVSuccess(data){
+    function getMVSuccess(data){ 
         if (data.data.total){
             pmk.total_items.mv = data.data.total;
         }
@@ -666,8 +757,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 most_viewed.push(data);
             }
         update_most_viewed(most_viewed);
-        //get_series_timeline();
-        //get_historical_data();
 
         function addSerieItems(data){
             var serie_id = data.data.criteria.series;
@@ -679,7 +768,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general' ? 'general':'particular';
-        pmk.loading.mv[tab][scope] = false;
+        pmk.loading.mv[tab][scope] = false; 
     }
 
     function getMVError(){
@@ -713,6 +802,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         // Series particular --> mmobj
         // Objects general --> mmobj
         // Objects particular --> mmobj
+        
         var tl_data = pmk.view.tabes.series && pmk.view.scope == 'general' ? 'series':'mmobj';
         var params = {
             'from_date': pmk.datepicker_mv.model_debug.from_date,
@@ -727,7 +817,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         return(
                 $http({
                     method: 'GET',
-                    url: '/api/media/views/' + tl_data,
+                    url: '/paella/views/',
                     params: params,
                 })
                 .then(addDataElem)
@@ -761,11 +851,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         var scope = pmk.view.scope == 'general'? 'general':'particular';
         pmk.tl[tab][scope].data = angular.copy(pmk.tl[tab][scope].new_data)
         pmk.tl[tab][scope].api.update();
-        //notify({
-        //    message: "Timeline series data successfully updated",
-        //    templateUrl: "/static/angular/angular-notify.html",
-        //    classes: "danger alert-success",
-        //});
     }
 
     function getTLError(){
@@ -775,7 +860,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             classes: "danger alert-danger",
         });
     }
-
 
     function get_historical_data(origin){
 
@@ -790,11 +874,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
             if (pmk.his[tab][scope].api != undefined){
                 if (scope == 'general'){
-                    //var most_viewed = pmk.mv[tab][scope].data[0].values;
-                    //for (var value_indx in most_viewed){
-                    //    ids.push(most_viewed[value_indx].id);
-                    //}
-                    // FIXME
                     ids = [0];
                 }else{
                     ids.push($routeParams.id);
@@ -811,6 +890,61 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
     }
 
+    function get_agents_data(origin){
+
+        // The array could be of length 1 depending on the view
+        var ids = [];
+        var tab = pmk.view.tabes.series ? 'series':'objects';
+        var scope = pmk.view.scope == 'general'? 'general':'particular';
+
+        pmk.loading.mua[tab][scope] = true;
+
+        if ((!(origin=='datepicker' && typeof(pmk.datepicker_mv.model) === 'object')) && !(pmk.mua[tab][scope].api == undefined)){
+
+            if (pmk.mua[tab][scope].api != undefined){
+                if (scope == 'general'){
+                    ids = [0];
+                }else{
+                    ids.push($routeParams.id);
+                    console.log($routeParams.id);
+                }
+                pmk.mua[tab][scope].new_data = [];
+                var promises = []
+                    for (var id_indx in ids){
+                        promises.push(createPromise_mua(ids[id_indx]));
+                    }
+                $q.all(promises).then(getMuaSuccess);
+            }
+        }
+    }
+
+	function get_cities_data(origin){
+
+        // The array could be of length 1 depending on the view
+        var ids = [];
+        var tab = pmk.view.tabes.series ? 'series':'objects';
+        var scope = pmk.view.scope == 'general'? 'general':'particular';
+
+        pmk.loading.mvc[tab][scope] = true;
+
+        if ((!(origin=='datepicker' && typeof(pmk.datepicker_mv.model) === 'object')) && !(pmk.mvc[tab][scope].api == undefined)){
+
+            if (pmk.mvc[tab][scope].api != undefined){
+                if (scope == 'general'){
+                    ids = [0];
+                }else{
+                    ids.push($routeParams.id);
+                }
+                pmk.mvc[tab][scope].new_data = [];
+                var promises = []
+                    for (var id_indx in ids){
+                        promises.push(createPromise_mvc(ids[id_indx]));
+                    }
+                $q.all(promises).then(getMvcSuccess);
+            }
+        }
+    }
+	
     function createPromise_his(id){
 
         var his_data = "";
@@ -827,19 +961,102 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             params['criteria[$text][$search]'] = pmk.filter.title;
         }
 
-        if (parseInt(id)>0){
-            params[his_data] = id;
+        if (parseInt(id) > 0){
+
+            if (pmk.view.tabes.series) {
+                params['criteria[series]'] = id;
+            } else {
+                params['criteria[id]'] = id;
+            }
         }
-        if (his_data != ""){
-            his_data = '/' + his_data;
-        }
+
         return(
                 $http({
                     method: 'GET',
-                    url: '/api/media/views' + his_data,
+                    url: '/paella/views',
                     params: params,
                 })
                 .then(addDataElem_his)
+              );
+    }
+
+    function createPromise_mua(id){
+
+        var mua_data = "";
+        if (pmk.view.scope != 'general'){
+            mua_data = pmk.view.tabes.series ? 'series':'mmobj';
+        }
+        var params = {
+            'from_date': pmk.datepicker_mv.model_debug.from_date,
+            'to_date': pmk.datepicker_mv.model_debug.to_date,
+            'group_by': pmk.current_span,
+        }
+
+        if (pmk.filter.title != ""){
+            
+            if (pmk.view.tabes.series) {
+                params['criteria[criteria_series][$text][$search]'] = pmk.filter.title;
+            } else {
+                params['criteria[criteria_mmobj][$text][$search]'] = pmk.filter.title;
+            }
+        }
+
+        if (parseInt(id) > 0){
+
+            if (pmk.view.tabes.series) {
+                params['criteria[criteria_series][id]'] = id;
+            } else {
+                params['criteria[criteria_mmobj][id]'] = id;
+            }
+        }
+
+        return(
+                $http({
+                    method: 'GET',
+                    url: '/paella/most_used_agents',
+                    params: params,
+                })
+                .then(addDataElem_mua)
+              );
+    }
+	
+	function createPromise_mvc(id){
+
+        var mvc_data = "";
+        if (pmk.view.scope != 'general'){
+            mvc_data = pmk.view.tabes.series ? 'series':'mmobj';
+        }
+        var params = {
+            'from_date': pmk.datepicker_mv.model_debug.from_date,
+            'to_date': pmk.datepicker_mv.model_debug.to_date,
+            'group_by': pmk.current_span,
+        }
+
+        if (pmk.filter.title != ""){
+            
+            if (pmk.view.tabes.series) {
+                params['criteria[criteria_series][$text][$search]'] = pmk.filter.title;
+            } else {
+                params['criteria[criteria_mmobj][$text][$search]'] = pmk.filter.title;
+            }
+        }
+
+        if (parseInt(id) > 0){
+
+            if (pmk.view.tabes.series) {
+                params['criteria[criteria_series][id]'] = id;
+            } else {
+                params['criteria[criteria_mmobj][id]'] = id;
+            }
+        }
+
+        return(
+                $http({
+                    method: 'GET',
+                    url: '/paella/city_from_most_viewed',
+                    params: params,
+                })
+                .then(addDataElem_mvc)
               );
     }
 
@@ -853,7 +1070,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         for(var span_indx=0; span_indx<views.length; span_indx++){
             data_elem.push([
                     moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
-                    //views[span_indx]['_id'],
                     views[span_indx].numView
                     ]);
         }
@@ -888,6 +1104,86 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
     }
 
+    function addDataElem_mua(data){
+
+        var uses = data.data.m_used;
+        var tab = pmk.view.tabes.series ? 'series':'objects';
+        var scope = pmk.view.scope == 'general'? 'general':'particular';
+        var n_agents = 0;
+        var data_elem = [];
+        for(var span_indx=0; span_indx < uses.length; span_indx++){
+            data_elem.push([span_indx+1, uses[span_indx]['_id'], uses[span_indx].num_viewed]);
+            n_agents+= uses[span_indx].num_viewed;
+        }
+
+        // Aggregate data
+        if (pmk.mua[tab][scope].new_data.length == 0){
+            pmk.mua[tab][scope].new_data = angular.copy(data_elem);
+        }else{
+            var new_data = pmk.mua[tab][scope].new_data;
+            var count = 0;
+
+            for (var bar_indx=0; bar_indx<new_data.length; bar_indx++){
+                for (var i=count; i<data_elem.length; i++){
+                    if (new_data[bar_indx][0] < data_elem[count][0]){
+                        break;
+                    }
+                    if (new_data[bar_indx][0] == data_elem[count][0]){
+                        new_data[bar_indx][1] = new_data[bar_indx][1];
+                        count = count + 1;
+                        break;
+                    }
+                    if (new_data[bar_indx][0] > data_elem[count][0]){
+                        new_data.splice(bar_indx,0,data_elem[count]);
+                        count = count + 1;
+                    }
+                }
+            }
+        }
+        pmk.total_items.mua_views = n_agents;
+		pmk.total_items.mua_elems = uses.length;
+    }
+	
+	function addDataElem_mvc(data){
+
+        var cities = data.data.m_viewed;
+        var tab = pmk.view.tabes.series ? 'series':'objects';
+        var scope = pmk.view.scope == 'general'? 'general':'particular';
+        var n_cities = 0;
+        var data_elem = [];
+        for(var span_indx=0; span_indx < cities.length; span_indx++){
+            data_elem.push([span_indx+1, cities[span_indx]['_id']['city'], cities[span_indx].num_viewed]);
+            n_cities+= cities[span_indx].num_viewed;
+        }
+
+        // Aggregate data
+        if (pmk.mvc[tab][scope].new_data.length == 0){
+            pmk.mvc[tab][scope].new_data = angular.copy(data_elem);
+        }else{
+            var new_data = pmk.mvc[tab][scope].new_data;
+            var count = 0;
+
+            for (var bar_indx=0; bar_indx<new_data.length; bar_indx++){
+                for (var i=count; i<data_elem.length; i++){
+                    if (new_data[bar_indx][0] < data_elem[count][0]){
+                        break;
+                    }
+                    if (new_data[bar_indx][0] == data_elem[count][0]){
+                        new_data[bar_indx][1] = new_data[bar_indx][1];
+                        count = count + 1;
+                        break;
+                    }
+                    if (new_data[bar_indx][0] > data_elem[count][0]){
+                        new_data.splice(bar_indx,0,data_elem[count]);
+                        count = count + 1;
+                    }
+                }
+            }
+        }
+		pmk.total_items.mvc_views = n_cities;
+		pmk.total_items.mvc_elems = cities.length;
+    }
+
     function getHisSuccess(){
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general'? 'general':'particular';
@@ -909,14 +1205,42 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
     }
 
+    function getMuaSuccess(){
+        var tab = pmk.view.tabes.series ? 'series':'objects';
+        var scope = pmk.view.scope == 'general'? 'general':'particular';
+
+        var data = {
+            'key' : '',
+            'bar' : true,
+            'values' : pmk.mua[tab][scope].new_data,
+        }
+        pmk.mua[tab][scope].data = [angular.copy(data)];
+        pmk.mua[tab][scope].api.update();
+        pmk.loading.mua[tab][scope] = false;
+    }
+	
+	function getMvcSuccess(){
+        var tab = pmk.view.tabes.series ? 'series':'objects';
+        var scope = pmk.view.scope == 'general'? 'general':'particular';
+
+        var data = {
+            'key' : '',
+            'bar' : true,
+            'values' : pmk.mvc[tab][scope].new_data,
+        }
+        pmk.mvc[tab][scope].data = [angular.copy(data)];
+        pmk.mvc[tab][scope].api.update();
+        pmk.loading.mvc[tab][scope] = false;
+    }
+
 
     function save_string_dates(){
         //FIXME: Library bug. ng-change called twice. Second time not working
         if (typeof(pmk.datepicker_mv.model) === 'string'){
-            console.log(pmk.datepicker_mv.model);
+            //console.log(pmk.datepicker_mv.model);
             pmk.datepicker_mv.model_debug.from_date = moment(pmk.datepicker_mv.model.split("-")[0], pmk.datepicker_mv.locale.format).format('YYYY-MM-DD');
             pmk.datepicker_mv.model_debug.to_date = moment(pmk.datepicker_mv.model.split("-")[1], pmk.datepicker_mv.locale.format).format('YYYY-MM-DD');
-            console.log(pmk.datepicker_mv.model_debug);
+            //console.log(pmk.datepicker_mv.model_debug);
         }
     }
 });

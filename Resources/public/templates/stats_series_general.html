@@ -30,7 +30,6 @@
             </tbody>
           </table>
         </div>
-
         <div class="col col-md-6">
           <nvd3 options="pmkCtrl.mv.series.general.options" data="pmkCtrl.mv.series.general.data" config="pmkCtrl.mv.series.general.config" api="pmkCtrl.mv.series.general.api">
           </nvd3>
@@ -66,13 +65,13 @@
           </div>
         </div>
       </div>
-
     </div><!-- /.box-body -->
     <div ng-show="pmkCtrl.loading.mv.series.general" class="overlay">
       <i class="fa fa-refresh fa-spin"></i>
     </div>
   </div><!-- /.box -->
 </div>
+
 <div class="well col col-md-12">
   <div class="box box-success">
     <div class="box-header with-border">
@@ -89,8 +88,6 @@
 		 ng-class="{'btn-success': pmkCtrl.current_span == 'year'}"
 		 ng-click="pmkCtrl.current_span = 'year'; pmkCtrl.set_url_parameters('timespan')">Year</label>
         </div>
-        <!--<div range-slider min="1" max="24" model-min="pmkCtrl.slider_mv.min" model-max="pmkCtrl.slider_mv.max" show-values="true" pin-handle="min" ng-mouseup="pmkCtrl.get_most_viewed('slider')" attach-handle-values="true">
-        </div>-->
       </div>
     </div><!-- /.box-header -->
     <div class="box-body">
@@ -122,6 +119,88 @@
       </div>
     </div><!-- /.box-body -->
     <div ng-show="pmkCtrl.loading.his.series.general" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box-->
+</div>
+
+<div class="well col col-md-12">
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Most used agents</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="col col-md-6">
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
+          <thead>
+            <tr>
+              <th> Ranking </th>
+              <th> Agent </th>
+              <th> Views </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="agent in pmkCtrl.mua.series.general.new_data">
+              <td> {{agent[0]}}. </td>
+              <td> {{agent[1]}} </td>
+              <td> {{agent[2]}} </td>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b> Total:</b></td>
+              <td></td>
+              <td><b>{{pmkCtrl.total_items.mua_views}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col col-md-6">
+        <nvd3 options="pmkCtrl.mua.series.general.options" data="pmkCtrl.mua.series.general.data" config="pmkCtrl.mua.series.general.config" api="pmkCtrl.mua.series.general.api">
+        </nvd3>
+      </div>
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.mua.series.general" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box-->
+</div>
+
+<div class="well col col-md-12">
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Cities From</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="col col-md-6">
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
+          <thead>
+            <tr>
+              <th> Ranking </th>
+              <th> City </th>
+              <th> Views </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="city in pmkCtrl.mvc.series.general.new_data">
+              <td> {{city[0]}}. </td>
+              <td> {{city[1]}} </td>
+              <td> {{city[2]}} </td>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b> Total:</b></td>
+              <td></td>
+              <td><b>{{pmkCtrl.total_items.mvc_views}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col col-md-6">
+        <nvd3 options="pmkCtrl.mvc.series.general.options" data="pmkCtrl.mvc.series.general.data" config="pmkCtrl.mvc.series.general.config" api="pmkCtrl.mvc.series.general.api">
+        </nvd3>
+      </div>
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.mvc.series.general" class="overlay">
       <i class="fa fa-refresh fa-spin"></i>
     </div>
   </div><!-- /.box-->

@@ -132,3 +132,86 @@
     </div>
   </div><!-- /.box-->
 </div>
+
+
+<div class="well col col-md-12">
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Most used agents</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="col col-md-6">
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
+          <thead>
+            <tr>
+              <th> Ranking </th>
+              <th> Agent </th>
+              <th> Views </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="agent in pmkCtrl.mua.series.particular.new_data">
+              <td> {{agent[0]}}. </td>
+              <td> {{agent[1]}} </td>
+              <td> {{agent[2]}} </td>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b> Total:</b></td>
+              <td></td>
+              <td><b>{{pmkCtrl.total_items.mua_views}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col col-md-6">
+        <nvd3 options="pmkCtrl.mua.series.particular.options" data="pmkCtrl.mua.series.particular.data" config="pmkCtrl.mua.series.particular.config" api="pmkCtrl.mua.series.particular.api">
+        </nvd3>
+      </div>
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.mua.series.particular" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box-->
+</div>
+
+<div class="well col col-md-12">
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Cities From</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <div class="col col-md-6">
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
+          <thead>
+            <tr>
+              <th> Ranking </th>
+              <th> City </th>
+              <th> Views </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="city in pmkCtrl.mvc.series.particular.new_data">
+              <td> {{city[0]}}. </td>
+              <td> {{city[1]}} </td>
+              <td> {{city[2]}} </td>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b> Total:</b></td>
+              <td></td>
+              <td><b>{{pmkCtrl.total_items.mvc_views}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col col-md-6">
+        <nvd3 options="pmkCtrl.mvc.series.particular.options" data="pmkCtrl.mvc.series.particular.data" config="pmkCtrl.mvc.series.particular.config" api="pmkCtrl.mvc.series.particular.api">
+        </nvd3>
+      </div>
+    </div><!-- /.box-body -->
+    <div ng-show="pmkCtrl.loading.mvc.series.particular" class="overlay">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div><!-- /.box-->
+</div>
