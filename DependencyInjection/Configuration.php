@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\StatsPaellaUIBundle\DependencyInjection;
+namespace Pumukit\PaellaStatsUIBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

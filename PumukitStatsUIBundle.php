@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\StatsPaellaUIBundle;
+namespace Pumukit\PaellaStatsUIBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
