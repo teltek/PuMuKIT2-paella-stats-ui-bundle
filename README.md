@@ -28,7 +28,7 @@ Install the bundle by executing the following line command. This command updates
 .
 
 ```bash
-$ php app/console pumukit:install:bundle Pumukit/StatsUIBundle/PumukitStatsUIBundle
+$ php app/console pumukit:install:bundle Pumukit/PaellaStatsUIBundle/PumukitStatsUIBundle
 ```
 
 ### Step 3: Update assets
