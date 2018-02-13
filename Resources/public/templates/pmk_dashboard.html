@@ -84,6 +84,7 @@
           </div>
         </div>
       </div>
+	  
       <div ng-hide="pmkCtrl.view.tabes.objects && pmkCtrl.view.scope!='general'" class="col col-md-8">
         <div class="small-box custom-small-box bg-orange alert alert-dismissible alert-warning">
           <div class="inner" style="overflow:hidden;">
@@ -91,9 +92,10 @@
               <h5>{{pmkCtrl.total_items.mv}}</h5>
             </div>
             <div class="col col-sm-9 two-lines">
-              <p>Total 
-					<span ng-show="pmkCtrl.view.tabes.objects">objects(videos/audios)</span>
-					<span ng-hide="pmkCtrl.view.tabes.objects">series</span>
+				<p>Total 
+					<span ng-show="pmkCtrl.view.tabes.objects || pmkCtrl.view.scope!='general'">objects (videos/audios)</span>
+					<span ng-show="pmkCtrl.view.scope!='general'"> in serie</span>
+					<span ng-hide="pmkCtrl.view.tabes.objects || pmkCtrl.view.scope!='general'">series</span>
 				</p>
             </div>
           </div>
@@ -102,6 +104,7 @@
           </div>
         </div>
       </div>
+	  
       <div class="col col-md-8">
         <div class="small-box custom-small-box alert alert-dismissible alert-info">
           <div class="inner" style="overflow:hidden">
@@ -117,6 +120,7 @@
           </div>
         </div>
       </div>
+	  
 	  <div class="col col-md-8">
         <div class="small-box custom-small-box alert alert-dismissible alert-danger">
           <div class="inner" style="overflow:hidden">
@@ -138,8 +142,6 @@
 
     </section>
     
-
-
   </div><!-- /.content-wrapper -->
 </div>
 
