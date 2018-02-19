@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\StatsUIBundle\DependencyInjection;
+namespace Pumukit\PaellaStatsUIBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

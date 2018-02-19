@@ -18,11 +18,22 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require teltek/pmk2-paella-stats-ui-bundle dev_master
+$ composer require teltek/pmk2-paella-stats-ui-bundle dev-master
 ```
 
 
-### Step 2: Install the Bundle
+### Step 2: Uninstall the default UI Stats Bundle
+
+The StatsUIBundle needs to be uninstalled in order for the Paella Player Stats UI to work properly:
+
+Uninstall the bundle by executing the following line command. This command updates the Kernel to remove the bundle (app/AppKernel.php) and unloads the boundle routes from (app/config/routing.yml).
+
+```bash
+$ php app/console pumukit:install:bundle --uninstall Pumukit/StatsUIBundle/PumukitStatsUIBundle
+```
+
+
+### Step 3: Install the Bundle
 
 Install the bundle by executing the following line command. This command updates the Kernel to enable the bundle (app/AppKernel.php) and loads the routing (app/config/routing.yml) to add the bundle routes\
 .
@@ -31,7 +42,8 @@ Install the bundle by executing the following line command. This command updates
 $ php app/console pumukit:install:bundle Pumukit/PaellaStatsUIBundle/PumukitStatsUIBundle
 ```
 
-### Step 3: Update assets
+
+### Step 4: Update assets
 
 ```bash
 $ php app/console cache:clear

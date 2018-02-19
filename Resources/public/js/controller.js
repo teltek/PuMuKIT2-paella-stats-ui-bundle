@@ -840,7 +840,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             mmobj.values.push([
                     moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
                     //views[span_indx]['_id'],
-                    views[span_indx].numView
+                    views[span_indx].num_viewed
                     ]);
         }
         pmk.tl[tab][scope].new_data.push(mmobj);
@@ -1070,7 +1070,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         for(var span_indx=0; span_indx<views.length; span_indx++){
             data_elem.push([
                     moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
-                    views[span_indx].numView
+                    views[span_indx].num_viewed
                     ]);
         }
         data_elem.sort( function (a,b){ return a[0]-b[0]});
