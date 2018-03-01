@@ -840,7 +840,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             mmobj.values.push([
                     moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
                     //views[span_indx]['_id'],
-                    views[span_indx].num_viewed
+                    views[span_indx].numView
                     ]);
         }
         pmk.tl[tab][scope].new_data.push(mmobj);
