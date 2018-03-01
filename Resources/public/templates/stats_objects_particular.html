@@ -134,7 +134,8 @@
           <tbody>
             <tr ng-repeat="agent in pmkCtrl.mua.objects.particular.new_data">
               <td> {{agent[0]}}. </td>
-              <td> {{agent[1]}} </td>
+              <td ng-hide="agent[1].length">Unknown</td>
+              <td ng-show="agent[1].length"> {{agent[1]}} </td>
               <td> {{agent[2]}} </td>
           </tbody>
           <tfoot>
@@ -175,7 +176,8 @@
           <tbody>
             <tr ng-repeat="city in pmkCtrl.mvc.series.general.new_data">
               <td> {{city[0]}}. </td>
-              <td> {{city[1]}} </td>
+              <td ng-hide="city[1].length">Unknown</td>
+              <td ng-show="city[1].length"> {{city[1]}} </td>
               <td> {{city[2]}} </td>
           </tbody>
           <tfoot>
