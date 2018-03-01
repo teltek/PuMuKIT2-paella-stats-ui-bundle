@@ -378,7 +378,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             'extended': true,
         },
     };
-	
+
     activate();
 
     function activate(){
@@ -615,8 +615,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             .then( function (data){
                 var type = pmk.view.tabes.series ? 'series':'mmobj';
                 var generic_data_type = type.lastIndexOf('s') == type.length-1 ? type : (type + 's');
-                var obj = data.data[generic_data_type][0][type];               
-                
+                var obj = data.data[generic_data_type][0][type];
+
                 pmk.current = {
                     'id': obj.id,
                     'label': obj.title[obj.locale],
@@ -711,7 +711,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             "</table>";
     }
 
-    function getMVSuccess(data){ 
+    function getMVSuccess(data){
         if (data.data.total){
             pmk.total_items.mv = data.data.total;
         }
@@ -768,7 +768,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general' ? 'general':'particular';
-        pmk.loading.mv[tab][scope] = false; 
+        pmk.loading.mv[tab][scope] = false;
     }
 
     function getMVError(){
@@ -802,7 +802,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         // Series particular --> mmobj
         // Objects general --> mmobj
         // Objects particular --> mmobj
-        
+
         var tl_data = pmk.view.tabes.series && pmk.view.scope == 'general' ? 'series':'mmobj';
         var params = {
             'from_date': pmk.datepicker_mv.model_debug.from_date,
@@ -840,7 +840,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             mmobj.values.push([
                     moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
                     //views[span_indx]['_id'],
-                    views[span_indx].numView
+                    views[span_indx].num_viewed
                     ]);
         }
         pmk.tl[tab][scope].new_data.push(mmobj);
@@ -944,7 +944,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             }
         }
     }
-	
+
     function createPromise_his(id){
 
         var his_data = "";
@@ -993,7 +993,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
 
         if (pmk.filter.title != ""){
-            
+
             if (pmk.view.tabes.series) {
                 params['criteria[criteria_series][$text][$search]'] = pmk.filter.title;
             } else {
@@ -1019,7 +1019,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 .then(addDataElem_mua)
               );
     }
-	
+
 	function createPromise_mvc(id){
 
         var mvc_data = "";
@@ -1033,7 +1033,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
 
         if (pmk.filter.title != ""){
-            
+
             if (pmk.view.tabes.series) {
                 params['criteria[criteria_series][$text][$search]'] = pmk.filter.title;
             } else {
@@ -1143,7 +1143,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         pmk.total_items.mua_views = n_agents;
 		pmk.total_items.mua_elems = uses.length;
     }
-	
+
 	function addDataElem_mvc(data){
 
         var cities = data.data.m_viewed;
@@ -1218,7 +1218,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         pmk.mua[tab][scope].api.update();
         pmk.loading.mua[tab][scope] = false;
     }
-	
+
 	function getMvcSuccess(){
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general'? 'general':'particular';
