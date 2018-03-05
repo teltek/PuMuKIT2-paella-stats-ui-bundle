@@ -147,7 +147,7 @@
         <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
           <thead>
             <tr>
-              <th> Ranking </th>
+              <th style="width:60px;"> Ranking </th>
               <th> Agent </th>
               <th> Views </th>
             </tr>
@@ -155,8 +155,7 @@
           <tbody>
             <tr ng-repeat="agent in pmkCtrl.mua.objects.general.new_data">
               <td> {{agent[0]}}. </td>
-              <td ng-hide="agent[1].length">Unknown</td>
-              <td ng-show="agent[1].length"> {{agent[1]}} </td>
+              <td> {{agent[1].length ? agent[1] : 'Undefined'}} </td>
               <td> {{agent[2]}} </td>
           </tbody>
           <tfoot>
@@ -189,16 +188,15 @@
         <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px">
           <thead>
             <tr>
-              <th> Ranking </th>
-              <th> City </th>
+              <th style="width:60px;"> Ranking </th>
+              <th> City </td>
               <th> Views </th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="city in pmkCtrl.mvc.objects.general.new_data">
               <td> {{city[0]}}. </td>
-              <td ng-hide="city[1].length">Unknown</td>
-              <td ng-show="city[1].length"> {{city[1]}} </td>
+              <td> {{city[1].length ? city[1] : 'Undefined'}} </td>
               <td> {{city[2]}} </td>
           </tbody>
           <tfoot>
