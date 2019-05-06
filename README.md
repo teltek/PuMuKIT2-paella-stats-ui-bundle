@@ -18,7 +18,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require teltek/pmk2-paella-stats-ui-bundle dev-master
+$ composer require teltek/pumukit-paella-stats-ui-bundle dev-master
 ```
 
 
