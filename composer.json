@@ -1,22 +1,22 @@
 {
-    "name": "teltek/pmk2-paella-stats-ui-bundle",
+    "name": "teltek/pumukit-paella-stats-ui-bundle",
     "description": "Paella Stats UI for PuMuKIT",
     "type": "symfony-bundle",
     "keywords": [
         "ui",        
         "stats",
-        "symfony2",
+        "symfony",
         "bundle",
         "pumukit",
         "teltek",
 		"paella"
     ],
     "require": {
-        "php": ">=5.5.9",
-        "pumukit/pumukit2": ">=2.3",
-        "teltek/pmk2-paella-stats-bundle": "dev-master"
+        "php": ">=7.2",
+        "pumukit/pumukit": ">=3.0",
+        "teltek/pumukit-paella-stats-bundle": ">=2.0"
     },
-    "homepage": "https://github.com/teltek/PuMuKIT2-paella-stats-ui-bundle",
+    "homepage": "https://github.com/teltek/PumukitPaellaStatsUIBundle",
     "license": "proprietary",
     "authors": [
         {
